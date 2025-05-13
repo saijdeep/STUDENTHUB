@@ -11,9 +11,9 @@ export default defineConfig({
       '/api': {
         target: 'https://abc-1-54m7.onrender.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/^\/api/, ''),
       }
-    }
+
   },
   allowedHosts: [
       'localhost',
