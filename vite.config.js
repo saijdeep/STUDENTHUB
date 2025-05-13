@@ -9,7 +9,7 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'https://abc-1-54m7.onrender.com',
+        target: 'http://localhost:3001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       }
@@ -17,7 +17,8 @@ export default defineConfig({
   },
   allowedHosts: [
       'localhost',
-      'onestudenthub.onrender.com' // Add your Render URL here
+      /*'onestudenthub.onrender.com' // Add your Render URL here*/
+      'onestudenthub-2.onrender.com' // Your NEW Render URL
     ]
   },
   build: {
