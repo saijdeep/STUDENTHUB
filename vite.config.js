@@ -15,6 +15,11 @@ export default defineConfig({
       }
     }
   },
+  allowedHosts: [
+      'localhost',
+      'onestudenthub.onrender.com' // Add your Render URL here
+    ]
+  },
   build: {
     rollupOptions: {
       output: {
@@ -24,5 +29,5 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', '@reduxjs/toolkit', 'react-redux']
-  }
+  },
 })
