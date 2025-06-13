@@ -18,7 +18,7 @@ export default defineConfig({
   allowedHosts: [
       'localhost',
       /*'onestudenthub.onrender.com' // Add your Render URL here*/
-      'https://studenthub-1.onrender.com' // Your NEW Render URL
+      'studenthub-1.onrender.com' // Your NEW Render URL
     ]
   },
   build: {
