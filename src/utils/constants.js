@@ -1,1 +1,1 @@
-export const BASE_URL = "https://backend-1-pozv.onrender.com";
+export const BASE_URL = "";
