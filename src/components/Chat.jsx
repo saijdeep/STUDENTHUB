@@ -123,6 +123,7 @@ const Chat = () => {
         setSending(true);
         setError("");
         // Optimistic update: add message to UI immediately with sender name
+<<<<<<< HEAD
 const tempMessage = {
   content: newMessage,
   sender: {
@@ -135,6 +136,18 @@ const tempMessage = {
 setMessages((prev) => [...prev, tempMessage]);
 
         
+=======
+        const tempMessage = {
+            content: newMessage,
+            sender: {
+                _id: currentUser._id,
+                firstName: currentUser.firstName,
+                lastName: currentUser.lastName
+            },
+            createdAt: new Date().toISOString(),
+        };
+        setMessages((prev) => [...prev, tempMessage]);
+>>>>>>> de1e054 (Updated UI components and fixed Chat.jsx conflict)
         try {
             socketRef.current.emit("send_message", { roomId, content: newMessage });
             setNewMessage("");
