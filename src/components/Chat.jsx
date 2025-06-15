@@ -122,6 +122,13 @@ const Chat = () => {
         if (!newMessage.trim() || sending || !roomId) return;
         setSending(true);
         setError("");
+        // Optimistic update: add message to UI immediately
+        const tempMessage = {
+            content: newMessage,
+            sender: currentUser._id,
+            createdAt: new Date().toISOString(),
+        };
+        setMessages((prev) => [...prev, tempMessage]);
         try {
             socketRef.current.emit("send_message", { roomId, content: newMessage });
             setNewMessage("");
