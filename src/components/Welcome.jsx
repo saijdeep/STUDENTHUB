@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
+import Footer from "./Footer";
 
 const Welcome = () => {
   return (
     <div className="min-h-[85vh] flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 animate-fade-in">
-      <div className="text-center max-w-3xl px-4">
+      <NavBar />
+      <div className="text-center max-w-3xl px-4 mt-8">
         {/* Hero Section */}
-        <h1 className="text-5xl font-bold text-gray-900 mb-6">
-          Welcome to <span className="text-indigo-600">StudentHub</span>
+        <h1 className="text-5xl font-bold mb-6">
+          <span className="text-indigo-600">Welcome to</span> <span className="text-indigo-600">StudentHub</span>
         </h1>
-        <p className="text-xl text-gray-600 mb-8">
+        <p className="text-xl text-black font-semibold mb-8">
           Connect with fellow students, share knowledge, and build meaningful relationships
           in your academic journey.
         </p>
@@ -98,6 +101,7 @@ const Welcome = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

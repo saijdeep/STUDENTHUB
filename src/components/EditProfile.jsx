@@ -126,8 +126,8 @@ const EditProfile = () => {
         </div>
       </div>
       {/* Edit Profile Form */}
-      <div className="card bg-[#4C0070] max-w-4xl w-[1400px] shadow-sm h-full min-h-[500px] flex flex-col justify-start">
-        <div className="card-body w-full max-w-4xl w-[1400px]">
+      <div className="card bg-[#4C0070] max-w-[1200px] w-[1200px] shadow-sm h-full min-h-[500px] flex flex-col justify-start">
+        <div className="card-body w-full max-w-[1200px] w-[1200px]">
           <h2 className="card-title justify-center">Edit Profile</h2>
           <div>
             <label className="form-control w-full max-w-none my-2">
