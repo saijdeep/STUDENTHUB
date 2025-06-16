@@ -122,6 +122,17 @@ const Chat = () => {
         if (!newMessage.trim() || sending || !roomId) return;
         setSending(true);
         setError("");
+        // Optimistic update: add message to UI immediately with sender name
+        const tempMessage = {
+            content: newMessage,
+            sender: {
+                _id: currentUser._id,
+                firstName: currentUser.firstName,
+                lastName: currentUser.lastName
+            },
+            createdAt: new Date().toISOString(),
+        };
+        setMessages((prev) => [...prev, tempMessage]);
         try {
             socketRef.current.emit("send_message", { roomId, content: newMessage });
             setNewMessage("");
@@ -191,7 +202,12 @@ const Chat = () => {
                 {messages.map((message, index) => {
                     // Robust sender check
                     const senderId = typeof message.sender === 'object' ? message.sender._id : message.sender;
-                    const senderName = typeof message.sender === 'object' ? (message.sender.firstName || 'Unknown') : (message.senderName || 'Unknown');
+                    let senderName = 'Unknown';
+                    if (typeof message.sender === 'object' && message.sender.firstName) {
+                        senderName = message.sender.firstName;
+                    } else if (senderId === currentUser._id) {
+                        senderName = currentUser.firstName;
+                    }
                     const isSent = senderId === currentUser._id;
                     let sentTime = '-';
                     let deliveredTime = '-';
@@ -215,22 +231,21 @@ const Chat = () => {
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="font-semibold text-xs text-blue-300">{senderName}</span>
                             </div>
-                            <div className="message-content relative pb-5">
+                            <div className="message-content relative pb-2">
                                 {message.content}
+                            </div>
+                            {/* Time and tick icon below bubble, centered */}
+                            <div className="flex justify-center items-center gap-1 text-xs text-gray-400 mt-1">
                                 {isSent && (
-                                  <span className="absolute right-3 bottom-1 flex items-center gap-1 text-xs text-gray-400">
-                                    {/* Tick icon */}
                                     <svg className="inline w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                     </svg>
-                                    {/* Show deliveredTime if available, else sentTime, else nothing */}
-                                    {(deliveredTime !== '-' && deliveredTime) ? (
-                                      <span className="text-green-500">{deliveredTime}</span>
-                                    ) : (sentTime !== '-' && sentTime) ? (
-                                      <span className="text-gray-400">{sentTime}</span>
-                                    ) : null}
-                                  </span>
                                 )}
+                                {(deliveredTime !== '-' && deliveredTime) ? (
+                                    <span className="text-green-500">{deliveredTime}</span>
+                                ) : (sentTime !== '-' && sentTime) ? (
+                                    <span className="text-gray-400">{sentTime}</span>
+                                ) : null}
                             </div>
                         </div>
                     );
