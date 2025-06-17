@@ -14,6 +14,10 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotStatus, setForgotStatus] = useState("");
+  const [forgotLoading, setForgotLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,6 +66,28 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError(""); // Clear error when user types
+  };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setForgotStatus("");
+    setForgotLoading(true);
+    try {
+      const response = await fetch(`${BASE_URL}/auth/forgot-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emailId: forgotEmail })
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to send reset link");
+      }
+      setForgotStatus("Password reset link sent! Check your email.");
+    } catch (err) {
+      setForgotStatus(err.message || "Failed to send reset link");
+    } finally {
+      setForgotLoading(false);
+    }
   };
 
   return (
@@ -138,6 +164,18 @@ const Login = () => {
             />
           </div>
 
+          {isLogin && (
+            <div className="flex justify-end -mt-2 mb-2">
+              <button
+                type="button"
+                className="text-indigo-600 hover:text-indigo-800 text-sm font-medium focus:outline-none"
+                onClick={() => setShowForgotModal(true)}
+              >
+                Forgot Password?
+              </button>
+            </div>
+          )}
+
           <button 
             type="submit" 
             className={`btn btn-primary w-full ${loading ? 'loading' : ''}`}
@@ -167,6 +205,32 @@ const Login = () => {
           </button>
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      {showForgotModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-sm relative">
+            <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-xl" onClick={() => { setShowForgotModal(false); setForgotStatus(""); setForgotEmail(""); }}>&times;</button>
+            <h3 className="text-xl font-bold mb-4 text-center text-indigo-700">Forgot Password</h3>
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <div>
+                <label className="block text-gray-700 mb-2">Enter your email address</label>
+                <input
+                  type="email"
+                  className="input input-bordered w-full"
+                  value={forgotEmail}
+                  onChange={e => setForgotEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className={`btn btn-primary w-full ${forgotLoading ? 'loading' : ''}`} disabled={forgotLoading}>
+                {forgotLoading ? 'Sending...' : 'Send Reset Link'}
+              </button>
+            </form>
+            {forgotStatus && <div className="mt-4 text-center text-sm text-indigo-700">{forgotStatus}</div>}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

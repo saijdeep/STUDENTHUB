@@ -13,12 +13,12 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       }
-
-  },
-  allowedHosts: [
+    },
+    allowedHosts: [
       'localhost',
       'studenthub-4.onrender.com',
-      'studenthub-5.onrender.com' // Added new Render frontend URL
+      'studenthub-5.onrender.com',
+      'studenthub-6.onrender.com'
     ]
   },
   build: {
