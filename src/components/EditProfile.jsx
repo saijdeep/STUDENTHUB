@@ -126,8 +126,8 @@ const EditProfile = () => {
         </div>
       </div>
       {/* Edit Profile Form */}
-      <div className="card bg-[#4C0070] max-w-4xl w-[1400px] shadow-sm h-full min-h-[500px] flex flex-col justify-start">
-        <div className="card-body w-full max-w-4xl w-[1400px]">
+      <div className="card bg-[#4C0070] max-w-lg w-full shadow-sm h-full min-h-[500px] flex flex-col justify-start">
+        <div className="card-body w-full max-w-lg w-full">
           <h2 className="card-title justify-center">Edit Profile</h2>
           <div>
             <label className="form-control w-full max-w-none my-2">
@@ -290,9 +290,9 @@ const EditProfile = () => {
             </label>
 
             {error && <p className="text-error mt-2">{error}</p>}
-            <div className="card-actions justify-center m-2">
+            <div className="card-actions m-2">
               <button 
-                className={`btn btn-primary ${loading ? 'loading' : ''}`}
+                className={`btn btn-primary w-full py-3 text-lg font-semibold ${loading ? 'loading' : ''}`}
                 onClick={saveProfile}
                 disabled={loading}
               >
